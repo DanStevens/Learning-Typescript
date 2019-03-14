@@ -1,10 +1,17 @@
 import moment from 'moment';
 
+enum PersonCategory {
+  Undefined,
+  Infant,
+  Child,
+  Adult
+}
+
 interface IPerson {
   dateOfBirth: Date;
   canSignContracts: boolean;
   getAge(): number;
-  readonly category: string;
+  readonly category: PersonCategory;
   toString() : string;
 }
 
@@ -13,7 +20,7 @@ abstract class PersonBase implements IPerson
   public name: string
   public dateOfBirth: Date;
   public canSignContracts: boolean = false;
-  public category: string = '';
+  public category: PersonCategory = PersonCategory.Undefined;
   constructor(name: string, dateOfBirth: Date) {
     this.name = name;
     this.dateOfBirth = dateOfBirth;
@@ -22,7 +29,7 @@ abstract class PersonBase implements IPerson
     return moment().diff(moment(this.dateOfBirth), 'years');
   }
   toString() : string {
-    return `${this.name} is ${this.category} aged ${this.getAge()}. ` +
+    return ` ${PersonCategory[this.category]}, ${this.name}, is aged ${this.getAge()}. ` +
            `This person ${this.canSignContracts ? 'is' : 'is not'} old enough to sign contracts`;
   }
 }
@@ -31,7 +38,7 @@ class Adult extends PersonBase {
   constructor(name: string, dateOfBirth: Date) {
     super(name, dateOfBirth);
     this.canSignContracts = true;
-    this.category = 'an adult';
+    this.category = PersonCategory.Adult;
   }
 }
 
@@ -39,7 +46,7 @@ class Child extends PersonBase {
   constructor(name: string, dateOfBirth: Date) {
     super(name, dateOfBirth);
     this.canSignContracts = false;
-    this.category = 'a child';
+    this.category = PersonCategory.Child;
   }
 }
 
@@ -47,7 +54,7 @@ class Infant extends PersonBase {
   constructor(name: string, dateOfBirth: Date) {
     super(name, dateOfBirth);
     this.canSignContracts = false;
-    this.category = 'an infant';
+    this.category = PersonCategory.Infant;
   }
 }
 

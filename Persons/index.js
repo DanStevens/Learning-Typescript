@@ -17,10 +17,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var moment_1 = __importDefault(require("moment"));
+var PersonCategory;
+(function (PersonCategory) {
+    PersonCategory[PersonCategory["Undefined"] = 0] = "Undefined";
+    PersonCategory[PersonCategory["Infant"] = 1] = "Infant";
+    PersonCategory[PersonCategory["Child"] = 2] = "Child";
+    PersonCategory[PersonCategory["Adult"] = 3] = "Adult";
+})(PersonCategory || (PersonCategory = {}));
 var PersonBase = /** @class */ (function () {
     function PersonBase(name, dateOfBirth) {
         this.canSignContracts = false;
-        this.category = '';
+        this.category = PersonCategory.Undefined;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
     }
@@ -28,7 +35,7 @@ var PersonBase = /** @class */ (function () {
         return moment_1.default().diff(moment_1.default(this.dateOfBirth), 'years');
     };
     PersonBase.prototype.toString = function () {
-        return this.name + " is " + this.category + " aged " + this.getAge() + ". " +
+        return " " + PersonCategory[this.category] + ", " + this.name + ", is aged " + this.getAge() + ". " +
             ("This person " + (this.canSignContracts ? 'is' : 'is not') + " old enough to sign contracts");
     };
     return PersonBase;
@@ -38,7 +45,7 @@ var Adult = /** @class */ (function (_super) {
     function Adult(name, dateOfBirth) {
         var _this = _super.call(this, name, dateOfBirth) || this;
         _this.canSignContracts = true;
-        _this.category = 'an adult';
+        _this.category = PersonCategory.Adult;
         return _this;
     }
     return Adult;
@@ -48,7 +55,7 @@ var Child = /** @class */ (function (_super) {
     function Child(name, dateOfBirth) {
         var _this = _super.call(this, name, dateOfBirth) || this;
         _this.canSignContracts = false;
-        _this.category = 'a child';
+        _this.category = PersonCategory.Child;
         return _this;
     }
     return Child;
@@ -58,7 +65,7 @@ var Infant = /** @class */ (function (_super) {
     function Infant(name, dateOfBirth) {
         var _this = _super.call(this, name, dateOfBirth) || this;
         _this.canSignContracts = false;
-        _this.category = 'an infant';
+        _this.category = PersonCategory.Infant;
         return _this;
     }
     return Infant;
