@@ -26,7 +26,6 @@ var PersonCategory;
 })(PersonCategory || (PersonCategory = {}));
 var PersonBase = /** @class */ (function () {
     function PersonBase(name, dateOfBirth) {
-        this.canSignContracts = false;
         this.category = PersonCategory.Undefined;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -36,7 +35,7 @@ var PersonBase = /** @class */ (function () {
     };
     PersonBase.prototype.toString = function () {
         return " " + PersonCategory[this.category] + ", " + this.name + ", is aged " + this.getAge() + ". " +
-            ("This person " + (this.canSignContracts ? 'is' : 'is not') + " old enough to sign contracts");
+            ("This person " + (this.canSignContracts() ? 'is' : 'is not') + " old enough to sign contracts.");
     };
     return PersonBase;
 }());
@@ -44,30 +43,30 @@ var Adult = /** @class */ (function (_super) {
     __extends(Adult, _super);
     function Adult(name, dateOfBirth) {
         var _this = _super.call(this, name, dateOfBirth) || this;
-        _this.canSignContracts = true;
         _this.category = PersonCategory.Adult;
         return _this;
     }
+    Adult.prototype.canSignContracts = function () { return true; };
     return Adult;
 }(PersonBase));
 var Child = /** @class */ (function (_super) {
     __extends(Child, _super);
     function Child(name, dateOfBirth) {
         var _this = _super.call(this, name, dateOfBirth) || this;
-        _this.canSignContracts = false;
         _this.category = PersonCategory.Child;
         return _this;
     }
+    Child.prototype.canSignContracts = function () { return false; };
     return Child;
 }(PersonBase));
 var Infant = /** @class */ (function (_super) {
     __extends(Infant, _super);
     function Infant(name, dateOfBirth) {
         var _this = _super.call(this, name, dateOfBirth) || this;
-        _this.canSignContracts = false;
         _this.category = PersonCategory.Infant;
         return _this;
     }
+    Infant.prototype.canSignContracts = function () { return false; };
     return Infant;
 }(PersonBase));
 var PersonFactory = /** @class */ (function () {

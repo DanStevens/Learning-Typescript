@@ -9,9 +9,9 @@ enum PersonCategory {
 
 interface IPerson {
   dateOfBirth: Date;
-  canSignContracts: boolean;
-  getAge(): number;
   readonly category: PersonCategory;
+  canSignContracts(): boolean;
+  getAge(): number;
   toString() : string;
 }
 
@@ -19,7 +19,7 @@ abstract class PersonBase implements IPerson
 {
   public name: string
   public dateOfBirth: Date;
-  public canSignContracts: boolean = false;
+  public abstract canSignContracts(): boolean;
   public category: PersonCategory = PersonCategory.Undefined;
   constructor(name: string, dateOfBirth: Date) {
     this.name = name;
@@ -30,32 +30,32 @@ abstract class PersonBase implements IPerson
   }
   toString() : string {
     return ` ${PersonCategory[this.category]}, ${this.name}, is aged ${this.getAge()}. ` +
-           `This person ${this.canSignContracts ? 'is' : 'is not'} old enough to sign contracts`;
+           `This person ${this.canSignContracts() ? 'is' : 'is not'} old enough to sign contracts.`;
   }
 }
 
 class Adult extends PersonBase {
   constructor(name: string, dateOfBirth: Date) {
     super(name, dateOfBirth);
-    this.canSignContracts = true;
     this.category = PersonCategory.Adult;
   }
+  canSignContracts(): boolean { return true; }
 }
 
 class Child extends PersonBase {
   constructor(name: string, dateOfBirth: Date) {
     super(name, dateOfBirth);
-    this.canSignContracts = false;
     this.category = PersonCategory.Child;
   }
+  canSignContracts(): boolean { return false; }
 }
 
 class Infant extends PersonBase {
   constructor(name: string, dateOfBirth: Date) {
     super(name, dateOfBirth);
-    this.canSignContracts = false;
     this.category = PersonCategory.Infant;
   }
+  canSignContracts(): boolean { return false; }
 }
 
 class PersonFactory {
