@@ -1,10 +1,7 @@
-console.log('Hello TypeScript!');
+import "./extMethods";
 
-let a = 1 + 2
-let b = a + 3
-let c = {
-  apple: a,
-  banana: b
-}
-let d = c.apple * 4
-let e = ["hi", 1] 
+console.log('Hello, Typescript');
+
+var num = 123456789;
+
+console.log(num.thousandsSeperator());

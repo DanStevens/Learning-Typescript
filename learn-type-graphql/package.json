@@ -1,0 +1,17 @@
+{
+  "name": "learn-type-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/graphql": "^14.2.3",
+    "graphql": "^14.4.2",
+    "type-graphql": "^0.17.4"
+  }
+}
